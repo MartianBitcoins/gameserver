@@ -2,7 +2,6 @@ var assert   =  require('assert');
 var CBuffer  =  require('CBuffer');
 var events   =  require('events');
 var util     =  require('util');
-var _        =  require('lodash');
 
 var db       =  require('./database');
 var lib      =  require('./lib');

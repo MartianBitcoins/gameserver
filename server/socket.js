@@ -1,9 +1,8 @@
-var CBuffer = require('CBuffer');
-var socketio = require('socket.io');
-var database = require('./database');
-var lib = require('./lib');
+const socketio = require('socket.io');
+const { validateOneTimeToken } = require('./database');
+const { isInt, isUUIDv4 } = require('./lib');
 
-module.exports = function(server,game,chat) {
+module.exports = function socket(server,game,chat) {
     var io = socketio(server);
 
     (function() {
@@ -52,7 +51,7 @@ module.exports = function(server,game,chat) {
 
             var autoCashOut; // can be null
             if (info.auto_cash_out) {
-                if (!lib.isInt(info.auto_cash_out) || info.auto_cash_out <= 100)
+                if (!isInt(info.auto_cash_out) || info.auto_cash_out <= 100)
                     return sendError(socket, '[join] Invalid auto cash out');
 
                 autoCashOut = info.auto_cash_out;
@@ -60,10 +59,10 @@ module.exports = function(server,game,chat) {
 
             var ott = info.ott;
             if (ott) {
-                if (!lib.isUUIDv4(ott))
+                if (!isUUIDv4(ott))
                     return sendError(socket, '[join] ott not valid');
 
-                database.validateOneTimeToken(ott, function (err, user) {
+                validateOneTimeToken(ott, function (err, user) {
                     if (err) {
                         if (err == 'NOT_VALID_TOKEN')
                             return ack(err);
@@ -119,11 +118,11 @@ module.exports = function(server,game,chat) {
         if (loggedIn)
         socket.on('place_bet', function(amount, autoCashOut, ack) {
 
-            if (!lib.isInt(amount)) {
+            if (!isInt(amount)) {
                 return sendError(socket, '[place_bet] No place bet amount: ' + amount);
 
             }
-            if (amount <= 0 || !lib.isInt(amount / 100)) {
+            if (amount <= 0 || !isInt(amount / 100)) {
                 return sendError(socket, '[place_bet] Must place a bet in multiples of 100, got: ' + amount);
             }
 
@@ -133,7 +132,7 @@ module.exports = function(server,game,chat) {
 
             if (!autoCashOut)
                 autoCashOut = null;
-            else if (!lib.isInt(autoCashOut) || autoCashOut < 100)
+            else if (!isInt(autoCashOut) || autoCashOut < 100)
                 return sendError(socket, '[place_bet] auto_cashout problem');
 
             if (typeof ack !== 'function')
@@ -242,7 +241,7 @@ module.exports = function(server,game,chat) {
             console.log(amount, typeof amount);
             if (!amount)
                 amount = null;
-            else if (!lib.isInt(amount) || amount <= 100)
+            else if (!isInt(amount) || amount <= 100)
                 return sendError(socket, '[set_auto_cash_out] amount problem');
 
             autoCashOut = amount;

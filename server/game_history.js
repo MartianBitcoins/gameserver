@@ -1,6 +1,4 @@
 var CBuffer = require('CBuffer');
-var database = require('./database');
-var _ = require('lodash');
 
 function GameHistory (gameTable) {
     var self = this;

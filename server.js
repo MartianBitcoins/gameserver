@@ -7,9 +7,6 @@ var database = require('./server/database');
 var Game = require('./server/game');
 var Chat = require('./server/chat');
 var GameHistory = require('./server/game_history');
-var lib = require('./server/lib');
-
-var _ = require('lodash');
 
 var port = process.env.PORT || 3842;
 

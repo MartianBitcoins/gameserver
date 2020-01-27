@@ -1,22 +1,21 @@
 {
-  "name": "MoneyPot",
-  "version": "0.0.1",
+  "name": "moneypot",
+  "version": "0.0.2",
   "engines": {
-    "node": "~0.10.32"
+    "node": "~12.11.1"
   },
   "dependencies": {
-    "CBuffer": "~0.1.4",
-    "async": "~0.8.0",
+    "CBuffer": "^2.0.0",
+    "async": "^3.1.1",
     "better-assert": "~1.0.0",
     "crypto-rand": "~0.0.2",
-    "lodash": "~2.4.1",
-    "pg": "~3.3.0",
-    "socket.io": "~1.1.0",
     "debug": "~1.0.4",
+    "lodash": "^4.17.15",
+    "password-hash": "~1.2.2",
+    "pg": "^7.17.1",
     "requirejs": "~2.1.15",
-    "uuid": "~2.0.1",
-    "bitcoinjs-lib": "~1.2.0",
-    "password-hash": "~1.2.2"
+    "socket.io": "^2.3.0",
+    "uuid": "^3.4.0"
   },
   "scripts": {
     "start": "node server.js --use_strict"
